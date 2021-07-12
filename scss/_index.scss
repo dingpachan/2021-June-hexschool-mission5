@@ -1,0 +1,105 @@
+.add{
+    background-color: #fff;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.15);
+    border-radius: 10px;
+    padding: 12px 0 12px 24px;
+    border-color: transparent;
+}
+
+.add-div{
+    position: relative;
+    align-items: center;
+}
+
+.add-btn{
+    position: absolute;
+    font-size: 35px;
+    right: 4px;
+    cursor: pointer;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.15);
+    border-radius: 10px;
+    border-radius: 10px;
+}
+
+.card-header{
+    li{
+        width: 33.33%;
+        border-bottom: 2px solid #EFEFEF;
+    }
+}
+
+.list-menu{
+    display: flex;
+    justify-content: space-between;
+    li {
+        text-align: center;
+    }
+}
+
+.list{
+    padding-left: 24px;
+    padding-right: 48px;
+    li{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @include md{
+            justify-content: start;
+        }
+    }
+}
+
+.todo-item{
+    display: flex;
+    align-items: center;
+    flex-grow:1;
+}
+
+.task{
+    width: 90%;
+    border-bottom: 1px solid #EFEFEF;
+    padding: 16px 0;
+    @include md{
+        margin-right: 0;
+    }
+}
+
+.task-done{
+    text-decoration: line-through;
+    color: #c2c2c2;
+}
+
+.delete{
+    font-size: 26px;
+    width: 16px;
+    height: 16px;
+    background: url(../images/times-solid.svg) no-repeat;
+}
+
+.card-footer{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-left: 24px;
+    padding-right: 48px;
+}
+
+.clear-done{
+    cursor:pointer;
+}
+
+.active.active {
+    border-bottom: 2px solid $secondary;
+    color: $secondary;
+    font-weight: bold;
+}
+
+.d-none{
+    display: none;
+}
