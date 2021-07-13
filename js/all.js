@@ -1,7 +1,4 @@
 const list_menu = document.querySelector(".list-menu");
-const all_tab = document.querySelector(".all-tab");
-const todo_tab = document.querySelector(".todo-tab");
-const done_tab = document.querySelector(".done-tab");
 const list = document.querySelector(".list");
 const not_finish = document.querySelector(".not-finish");
 const add_btn = document.querySelector(".add-btn");
@@ -51,14 +48,33 @@ function render(){
     let str = ""; // todo list 內容
     let not_finish_amount = 0; // 計算未完成數量
 
-    data_obj.forEach(function(item,index){
-        if( item.is_done == false ) {
-            not_finish_amount ++;
-            str += `<li><input type="checkbox" id="todo-item${index+1}" data-num=${index}><label for="todo-item${index+1}" class="todo-item"><span class="box"></span><div class="task">${item.todo}</div></label><a href="#" class="delete" data-num=${index}></a></li>`;
-        } else if ( item.is_done == true ) {
-            str += `<li><input type="checkbox" id="todo-item${index+1}" data-num=${index} checked><label for="todo-item${index+1}" class="todo-item"><span class="box"></span><div class="task task-done">${item.todo}</div></label><a href="#" class="delete" data-num=${index}></a></li>`;
-        }
-    });
+    console.log(list_menu.getAttribute("data-tab"));
+
+    if ( list_menu.getAttribute("data-tab") == "todo" ) {
+        data_obj.forEach(function(item,index){
+            if( item.is_done == false ) {
+                not_finish_amount ++;
+                str += `<li><input type="checkbox" id="todo-item${index+1}" data-num=${index}><label for="todo-item${index+1}" class="todo-item"><span class="box"></span><div class="task">${item.todo}</div></label><a href="#" class="delete" data-num=${index}></a></li>`;
+            }
+        });
+    } else if ( list_menu.getAttribute("data-tab") == "done" ) {
+        data_obj.forEach(function(item,index){
+            if( item.is_done == true ) {
+                str += `<li><input type="checkbox" id="todo-item${index+1}" data-num=${index} checked><label for="todo-item${index+1}" class="todo-item"><span class="box"></span><div class="task task-done">${item.todo}</div></label><a href="#" class="delete" data-num=${index}></a></li>`;
+            } else if ( item.is_done == false ) {
+                not_finish_amount ++;
+            }
+        });
+    } else {
+        data_obj.forEach(function(item,index){
+            if( item.is_done == false ) {
+                not_finish_amount ++;
+                str += `<li><input type="checkbox" id="todo-item${index+1}" data-num=${index}><label for="todo-item${index+1}" class="todo-item"><span class="box"></span><div class="task">${item.todo}</div></label><a href="#" class="delete" data-num=${index}></a></li>`;
+            } else if ( item.is_done == true ) {
+                str += `<li><input type="checkbox" id="todo-item${index+1}" data-num=${index} checked><label for="todo-item${index+1}" class="todo-item"><span class="box"></span><div class="task task-done">${item.todo}</div></label><a href="#" class="delete" data-num=${index}></a></li>`;
+            }
+        });
+    }
 
     list.innerHTML = str;
     not_finish.innerHTML = `${not_finish_amount} 個待完成項目`;
@@ -134,6 +150,7 @@ list_menu.addEventListener("click", function(e){
     
     if ( e.target.innerText == "待完成" ) {
         e.preventDefault();
+        list_menu.setAttribute("data-tab", "todo");
         data_obj.forEach(function(item,index){
             if( item.is_done == false ) {
                 str += `<li><input type="checkbox" id="todo-item${index+1}" data-num=${index}><label for="todo-item${index+1}" class="todo-item"><span class="box"></span><div class="task">${item.todo}</div></label><a href="#" class="delete" data-num=${index}></a></li>`;
@@ -146,6 +163,7 @@ list_menu.addEventListener("click", function(e){
         e.target.parentNode.setAttribute("class", "active");
     } else if ( e.target.innerText == "已完成" ) {
         e.preventDefault();
+        list_menu.setAttribute("data-tab", "done");
         data_obj.forEach(function(item,index){
             if( item.is_done == true ) {
                 str += `<li><input type="checkbox" id="todo-item${index+1}" data-num=${index} checked><label for="todo-item${index+1}" class="todo-item"><span class="box"></span><div class="task task-done">${item.todo}</div></label><a href="#" class="delete" data-num=${index}></a></li>`;
@@ -157,6 +175,7 @@ list_menu.addEventListener("click", function(e){
         e.target.parentNode.setAttribute("class", "active");
     } else {
         e.preventDefault();
+        list_menu.setAttribute("data-tab", "all");
         render();
         // 給當前點擊的 tab 添加 active
         e.target.parentNode.setAttribute("class", "active");
