@@ -9,7 +9,7 @@ img{
 
 body{
     background-image: linear-gradient(174deg, #FFD370 2%, #FFD370 46%, #FFFFFF 46%, #FFFFFF 100%, #E8E8E8 100%);
-    height: 100%;
+    min-height: 100vh;
     font-family: 'Noto Sans TC', sans-serif;
     color: $secondary;
     font-size: $font-size-2;
@@ -47,6 +47,7 @@ h1 {
 a {
     text-decoration: none;
     display: block;
+    color: $secondary;
 }
 
 input[type="checkbox"] {
@@ -78,6 +79,7 @@ input[type="checkbox"]:checked + label span.box{
 
 @include md {
     input[type="checkbox"]:hover + a.delete{
+        display: none;
         // display:inline-block;
         // width: 16px;
         // height: 16px;

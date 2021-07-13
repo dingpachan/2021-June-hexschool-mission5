@@ -8,7 +8,6 @@ const add_btn = document.querySelector(".add-btn");
 const add_content = document.querySelector(".add");
 const clear_btn = document.querySelector(".clear-done");
 const card = document.querySelector(".card");
-const card_footer = document.querySelector(".card-footer");
 
 let data_obj = [
     {
@@ -41,8 +40,6 @@ let data_obj = [
     }
 ];
 
-
-
 // 資料初始化
 function render(){
     if (data_obj.length == 0) {
@@ -72,7 +69,6 @@ render();
 // 偵測點選 todo 項目
 list.addEventListener("click",function(e){
     if (data_obj.length == 0) {
-        // card.style.display = "none";
         card.classList.add("d-none");
         return;
     }
@@ -110,17 +106,32 @@ add_btn.addEventListener("click", function(e){
 
 // 清除已完成項目
 clear_btn.addEventListener("click", function(e){
-    data_obj.forEach(function(item,index){
-        if ( item.is_done == true ) {
-            data_obj.splice(index, 1);
+    // let i = 0;
+    // data_obj.forEach(function(item,index){
+    //     if ( data_obj[i].is_done == true ) {
+    //         data_obj.splice(i, 1);
+    //         i = i-1;
+    //     }
+    //     i++;
+    // });
+    for ( let i = 0; i < data_obj.length; i++) {
+        if ( data_obj[i].is_done == true ) {
+            data_obj.splice(i, 1);
+            i--;
         }
-    });
+    }
     render();
 });
 
 // 偵測選擇顯示內容：全部、待完成、已完成
 list_menu.addEventListener("click", function(e){
     let str = "";
+    let all = document.querySelectorAll(".list-menu li");
+    // 每次點擊 tab 清空所有 tab li 的 active
+    all.forEach(function (item) {
+        item.setAttribute("class", "");
+    });
+    
     if ( e.target.innerText == "待完成" ) {
         e.preventDefault();
         data_obj.forEach(function(item,index){
@@ -130,7 +141,9 @@ list_menu.addEventListener("click", function(e){
         });
     
         list.innerHTML = str;
-        card_footer.classList.add("d-none");
+        console.log(e);
+        // 給當前點擊的 tab 添加 active
+        e.target.parentNode.setAttribute("class", "active");
     } else if ( e.target.innerText == "已完成" ) {
         e.preventDefault();
         data_obj.forEach(function(item,index){
@@ -140,10 +153,12 @@ list_menu.addEventListener("click", function(e){
         });
     
         list.innerHTML = str;
-        card_footer.classList.add("d-none");
+        // 給當前點擊的 tab 添加 active
+        e.target.parentNode.setAttribute("class", "active");
     } else {
         e.preventDefault();
         render();
-        card_footer.classList.remove("d-none");
+        // 給當前點擊的 tab 添加 active
+        e.target.parentNode.setAttribute("class", "active");
     }
 });
